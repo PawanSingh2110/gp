@@ -1,0 +1,148 @@
+Step 1: Create a new project and scene
+
+Open Unity Hub and click New Project.
+
+Select the 3D Core template.
+
+Name the project `Practical4_AudioRevision` and click Create Project.
+
+In Unity, use File → Save As and save the scene as `AudioScene`.
+
+Do not copy any old scene, object, or script from previous practicals.
+
+Step 2: Create the floor, ball, and walls
+
+In Hierarchy, right-click → 3D Object → Plane. Rename it `Ground`.
+
+Right-click → 3D Object → Sphere. Rename it `Ball`.
+
+Set Ball Position approximately to X=0, Y=0.5, Z=0 so it sits above the Plane.
+
+Create 3D Object → Cube and rename it `Wall`.
+
+Set Wall Position to X=0, Y=1, Z=4; Scale approximately X=8, Y=2, Z=0.5.
+
+Optional: create side walls using more Cubes.
+
+Plane, Sphere, and Cube usually receive 3D colliders automatically. Check they are enabled.
+
+Step 3: Add Rigidbody to Ball
+
+Select Ball in Hierarchy.
+
+Inspector → Add Component → Rigidbody (3D, not Rigidbody 2D).
+
+Keep Use Gravity ON and Is Kinematic OFF.
+
+Keep Ball’s Sphere Collider enabled.
+
+Rigidbody allows physics movement and collision callbacks.
+
+Step 4: Import audio files
+
+In Project window, create a folder named `Audio` inside Assets. A lowercase folder is also fine; use consistent spelling.
+
+Drag two audio files into it: background music and a short crash/impact sound.
+
+Example clip names: `bgmusic` and `crash`.
+
+Wait until Unity finishes importing the clips.
+
+Tip: Preview the clips in the Project window if you need to confirm they contain sound.
+
+Step 5: Set up background music
+
+In Hierarchy, right-click → Create Empty. Rename it `BackgroundMusic`.
+
+Select it and click Add Component → AudioSource.
+
+Drag `bgmusic` into the AudioClip field.
+
+Set Play On Awake = ON, Loop = ON, Volume = 0.5.
+
+Press Play: music should start automatically and loop.
+
+Step 6: Set up crash AudioSource on Ball
+
+Select Ball and add an AudioSource component.
+
+Drag `crash` into AudioClip.
+
+Set Play On Awake = OFF, Loop = OFF, Volume = 1.
+
+The crash sound should start only when the collision script tells it to play.
+
+Step 7: Create BallSound script
+
+Create a C# script named exactly `BallSound`, open it and replace its code with:
+
+using UnityEngine;
+
+public class BallSound : MonoBehaviour
+{
+    public AudioSource crashAudio;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("wall"))
+        {
+            crashAudio.Play();
+        }
+    }
+}
+
+Save the script and attach BallSound to Ball. Select Ball and drag Ball’s crash AudioSource into the `Crash Audio` field in the BallSound component. This reference is required.
+
+Step 8: Add the wall tag
+
+Select Wall.
+
+At the top of Inspector, open Tag.
+
+If `wall` does not exist, choose Add Tag…, add `wall`, then select Wall again and assign that tag.
+
+Spelling and capitalization must match exactly: `wall` is not the same as `Wall`.
+
+Step 9: Create BallMovement script
+
+Create a C# script named exactly `BallMovement`, then use:
+
+using UnityEngine;
+
+public class BallMovement : MonoBehaviour
+{
+    public float speed = 5f;
+
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    void FixedUpdate()
+    {
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(moveX, 0f, moveZ);
+
+        rb.AddForce(movement * speed);
+    }
+}
+
+Attach BallMovement to Ball. It reads keyboard input axes and applies force through the Ball’s Rigidbody.
+
+Step 10: Test the complete practical
+
+Save the scene with Ctrl+S.
+
+Press Play.
+
+Check that background music starts automatically.
+
+Use arrow keys or A/D and W/S, depending on the project input settings.
+
+Move Ball into Wall and listen for the crash sound.
+
+Confirm background music continues while the crash sound plays.

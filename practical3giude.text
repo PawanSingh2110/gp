@@ -1,0 +1,121 @@
+STEP 1 — Create or open a 3D project
+1. Open Unity Hub.
+2. Create a project with the 3D Core template, or open your existing project.
+3. Wait for the Editor to load.
+4. Save the scene using Ctrl+S.
+5. Do not delete Main Camera or Directional Light.
+
+STEP 2 — Create Ground (Plane)
+1. In the Hierarchy, right-click an empty area.
+2. Choose 3D Object > Plane.
+3. Rename it Ground.
+4. Set Transform:
+   Position: X = 0, Y = 0, Z = 0
+   Rotation: X = 0, Y = 0, Z = 0
+   Scale: X = 1, Y = 1, Z = 1
+5. Confirm the Plane's Mesh Renderer is enabled.
+
+STEP 3 — Create Cube
+1. In the Hierarchy, right-click an empty area.
+2. Choose 3D Object > Cube.
+3. Rename it Cube.
+4. Set Transform:
+   Position: X = 0, Y = 0.5, Z = 0
+   Rotation: X = 0, Y = 0, Z = 0
+   Scale: X = 1, Y = 1, Z = 1
+5. A default Cube is one unit high. Its centre at Y = 0.5 places its
+   bottom approximately on Ground at Y = 0.
+
+STEP 4 — Navigate the Scene View
+1. Select Cube in the Hierarchy.
+2. Move the pointer over Scene view and press F to focus the selected object.
+3. Use the mouse wheel to zoom.
+4. Hold the right mouse button and move the mouse to look around.
+5. Common tools: W = Move, E = Rotate, R = Scale.
+
+STEP 5 — Adjust Directional Light
+1. Select Directional Light in the Hierarchy.
+2. In Inspector > Transform, set Rotation approximately:
+   X = 50, Y = -30, Z = 0
+3. Find the Light component.
+4. Set Intensity to 0.5 and observe the scene.
+5. Then set Intensity to 2 and observe the difference.
+6. Save with Ctrl+S.
+
+What to observe:
+- Rotation changes the direction from which the scene is lit.
+- Intensity changes the strength of the light.
+- Exact brightness and shadows depend on the render pipeline and other
+  lighting settings.
+
+STEP 6 — Set up Main Camera
+1. Select Main Camera.
+2. Set Transform approximately:
+   Position: X = 0, Y = 4, Z = -8
+   Rotation: X = 25, Y = 0, Z = 0
+3. Click the Game tab.
+4. Press Play and check that Cube and Ground are visible.
+5. If either object is missing, stop Play mode and adjust the camera.
+6. Press Play again to stop the game before editing.
+
+Camera concepts:
+- Position = where the camera is.
+- Rotation = the direction the camera faces.
+- Field of View (FOV) = how wide an area a perspective camera shows.
+- Scene view is for editing; Game view shows the camera's rendered output.
+
+STEP 7 — Create MetalMaterial
+1. In the Project window, open Assets.
+2. Right-click an empty area.
+3. Choose Create > Material.
+4. Name it MetalMaterial.
+5. Select MetalMaterial to view its settings in Inspector.
+6. For a typical 3D Core/URP project, the shader is commonly Lit or
+   Universal Render Pipeline/Lit.
+7. Find Base Map or Albedo and click the colour swatch.
+8. Choose silver, grey, gold, or blue.
+9. Set Metallic = 1.
+10. Set Smoothness = 0.85.
+11. Save the scene.
+
+Note: Unity versions and render pipelines may use different labels. If
+Metallic or Smoothness is missing, check the material's Shader and ensure
+you selected the material asset, not just the Cube's Transform.
+
+STEP 8 — Apply the material to Cube
+1. Find MetalMaterial in the Project window.
+2. Drag it onto Cube in Scene view or the Hierarchy.
+   Alternatively, select Cube and place the material in its Mesh Renderer
+   material slot in Inspector.
+3. Confirm the material is shown under Cube's Mesh Renderer.
+4. Check Scene and Game views.
+5. Save with Ctrl+S.
+
+STEP 9 — Add a Reflection Probe
+1. Stop Play mode before editing.
+2. In Hierarchy, right-click and look for Light > Reflection Probe.
+   Depending on Unity version, it may also be under GameObject > Light.
+3. Create the Reflection Probe. Rename it ReflectionProbe if desired.
+4. Set its position approximately:
+   X = 0, Y = 1, Z = 0
+5. Inspect the probe's wireframe bounds in Scene view.
+6. Resize or adjust the bounds so Cube is inside the probe area.
+7. If the Inspector has a Bake button, click Bake.
+8. Check Cube again in Scene or Game view.
+
+Reflection note:
+A Reflection Probe captures environmental information for reflective
+materials. A plain scene may not contain much to reflect, so the Cube may
+look dark or only slightly reflective. Metallic = 1 alone does not guarantee
+a mirror-like appearance. Reflection behaviour differs by render pipeline.
+
+STEP 10 — Final test
+1. Save with Ctrl+S.
+2. Confirm Cube sits on Ground.
+3. Check Directional Light rotation and intensity.
+4. Confirm MetalMaterial is applied to Cube.
+5. Confirm Metallic = 1 and Smoothness = 0.85.
+6. Press Play.
+7. Check that Game view shows Cube and Ground with the adjusted camera and
+   lighting.
+8. Stop Play mode when finished.
