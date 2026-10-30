@@ -1,0 +1,17 @@
+Create a new project: Create a Unity 3D Core project named Practical6_Physics.
+
+Create the ground: Add a Plane, rename it Ground, set Position to (0, 0, 0), Scale to (3, 1, 3), and keep its Mesh Collider.
+
+Create the ball: Add a Sphere, rename it Ball, set Position to (0, 5, 0), and Scale to (1, 1, 1).
+
+Add Rigidbody: Select Ball → Add Component → Rigidbody. Keep Use Gravity checked and Is Kinematic unchecked. Leave the other Rigidbody values at their defaults.
+
+Test gravity and collision: Save the scene and press Play. The ball falls due to gravity and stops on the ground because the colliders prevent it from passing through the plane.
+
+Create a Physics Material: In the Project window, right-click Assets → Create → Physics Material (Unity 6 may display this exact menu label). Name it BouncyMaterial.
+
+Configure the material: Set Dynamic Friction = 0.4, Static Friction = 0.4, Bounciness = 0.8, Friction Combine = Average, and Bounce Combine = Maximum.
+
+Assign the material: Select Ball. In its Sphere Collider component, drag BouncyMaterial into the Material field.
+
+Test bouncing: Press Play. The ball bounces when it hits the ground. The user confirmed that bouncing worked.
