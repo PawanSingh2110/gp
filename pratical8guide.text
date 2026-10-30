@@ -1,0 +1,92 @@
+2. Project Setup
+
+A new Unity 3D project was created with the name Practical8_Testing_Debugging. This practical used a separate project and did not reuse objects or scripts from earlier practicals.
+
+3. Scene Objects and Components
+
+Object / Component
+
+Configuration
+
+Purpose
+
+Ground (Plane)
+
+Position (0, 0, 0); Scale (3, 1, 3)
+
+Provides the floor for the test scene.
+
+Player (Sphere)
+
+Position (0, 1, 0); Scale (1, 1, 1); Sphere Collider; Rigidbody
+
+Player object used to test movement, gravity, and collisions.
+
+Rigidbody
+
+Use Gravity on; Is Kinematic off; Mass 1; Drag 0
+
+Enables physics simulation for the Player.
+
+PlayerMovement.cs
+
+Speed = 5; reads Horizontal and Vertical input axes
+
+Moves the Player using keyboard input.
+
+Obstacle (Cube)
+
+Position (0, 1, 3); Scale (2, 2, 1); default Box Collider
+
+Acts as a collision obstacle.
+
+4. Player Movement Script
+
+The PlayerMovement.cs script used in the practical:
+
+using UnityEngine;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public float speed = 5f;
+
+    void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 movement = new Vector3(horizontal, 0f, vertical);
+
+        transform.Translate(movement * speed * Time.deltaTime);
+    }
+}
+
+5. Step-by-Step Implementation
+
+Create a new project: Create a Unity 3D project named Practical8_Testing_Debugging.
+
+Create Ground: Add a Plane, rename it Ground, set Position to (0, 0, 0), and Scale to (3, 1, 3).
+
+Create Player: Add a Sphere, rename it Player, set Position to (0, 1, 0), and Scale to (1, 1, 1). Keep its Sphere Collider.
+
+Add Rigidbody: Add a Rigidbody to Player. Keep Use Gravity enabled and Is Kinematic disabled.
+
+Create movement script: Create PlayerMovement.cs in Assets and enter the movement code shown above.
+
+Attach script: Drag PlayerMovement.cs onto Player and set Speed to 5.
+
+Test movement: Press Play, click the Game view, and test W/A/S/D. Confirm that the Player moves.
+
+Introduce a bug: Temporarily remove Time.deltaTime from the Translate expression: transform.Translate(movement * speed).
+
+Observe the bug: Test movement again. The movement becomes frame-rate dependent and can be faster or inconsistent depending on frame rate. In this practical, it appeared faster.
+
+Fix the bug: Restore Time.deltaTime: transform.Translate(movement * speed * Time.deltaTime). Save the script and retest.
+
+Create obstacle: Add a Cube named Obstacle at Position (0, 1, 3), Scale (2, 2, 1). Keep its Box Collider.
+
+Check collision: The Player Sphere Collider and Obstacle Box Collider interact with the Player Rigidbody. The Player was observed stopping at the obstacle.
+
+Inspect Console: Open Window → General → Console. Check for red errors and yellow warnings. The Console was clean in this practical.
+
+Final testing: Verify movement, collision, gravity/stability, and a clean Console. All four checks passed.
