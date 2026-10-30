@@ -1,0 +1,134 @@
+3. Project and Scene Setup
+
+Create a new Unity 3D Core project named Practical5_UI_Menu.
+
+Create a scene named MainScene and save it inside Assets/Scenes.
+
+Create a separate scene named GameScene and save it inside Assets/Scenes.
+
+Keep both scenes separate; do not overwrite MainScene when saving GameScene.
+
+4. Main Menu UI
+
+4.1 Canvas setup
+
+In MainScene, use Hierarchy → right-click → UI → Canvas. Unity also creates an EventSystem; keep it.
+
+Set Canvas Render Mode to Screen Space - Overlay.
+
+On Canvas Scaler, choose Scale With Screen Size.
+
+Set Reference Resolution to 1920 × 1080 and Match to 0.5.
+
+4.2 Background image
+
+Create an Images folder under Assets and import the generated game background.
+
+Select the imported image, set Texture Type to Sprite (2D and UI), and click Apply.
+
+Inside Canvas, create UI → Image and rename it Background.
+
+Assign the imported sprite to the Image component's Source Image field.
+
+Choose the Full Stretch anchor preset and set Left, Right, Top, and Bottom offsets to 0.
+
+Note: The background artwork includes decorative PLAY and QUIT graphics, but these are part of the picture and are not clickable. Separate Unity Button objects provide the actual functionality.
+
+4.3 PLAY button
+
+Right-click Canvas → UI → Button - TextMeshPro. If prompted, import TMP Essentials.
+
+Rename the button PlayButton.
+
+Select its child Text (TMP), set the text to PLAY, font size about 36, and alignment Center.
+
+Select PlayButton and set Rect Transform: Width 250, Height 70, Pos X 0, Pos Y -100.
+
+Set the Button Image color to green.
+
+4.4 QUIT button
+
+Duplicate PlayButton with Ctrl + D and rename the duplicate QuitButton.
+
+Set Pos X 0, Pos Y -190, Width 250, Height 70.
+
+Change its child Text (TMP) to QUIT.
+
+Set the Button Image color to red.
+
+5. MainMenuController Script
+
+Create a Scripts folder under Assets.
+
+Create a C# script named MainMenuController inside Scripts.
+
+Open it, replace its contents with the following code, and save with Ctrl + S.
+
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class MainMenuController : MonoBehaviour
+{
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Game Quit");
+    }
+}
+
+Explanation: PlayGame() loads the scene named GameScene. QuitGame() requests the built application to exit. Debug.Log() prints Game Quit in the Unity Console.
+
+6. Attach Script and Connect Main Menu Buttons
+
+In MainScene, create an empty GameObject and name it MenuManager.
+
+Drag MainMenuController.cs onto MenuManager in the Inspector.
+
+Select PlayButton. In Button (Script) → On Click(), press +.
+
+Drag MenuManager into the new object field and choose MainMenuController → PlayGame().
+
+Select QuitButton. Add an On Click() event, drag MenuManager into its object field, and choose MainMenuController → QuitGame().
+
+7. Add Scenes to Build Profiles
+
+Open File → Build Profiles and locate Scene List.
+
+Open MainScene and GameScene separately and use Add Open Scenes to add them.
+
+Verify that MainScene and GameScene are both checked in the Scene List.
+
+SampleScene may remain temporarily; it is not required for this practical.
+
+The scene name in SceneManager.LoadScene("GameScene") must match the saved scene name exactly.
+
+8. Build the Game Screen
+
+Open GameScene.
+
+Create a Canvas using UI → Canvas. Keep the EventSystem.
+
+Inside Canvas, create UI → Text - TextMeshPro and rename it GameStartedText.
+
+Set its text to GAME STARTED!, choose a readable font size, center alignment, and a visible color.
+
+The two-line text layout is fine if it looks good in the Game view; it does not need to be forced onto one line.
+
+9. Add QUIT GAME inside GameScene
+
+Inside GameScene Canvas, create UI → Button - TextMeshPro.
+
+Rename it QuitButton and set its child Text (TMP) to QUIT GAME.
+
+Set its Image color to red and position it below the GAME STARTED message.
+
+If GameScene does not already have a MenuManager, create an empty GameObject named MenuManager.
+
+Attach MainMenuController.cs to the GameScene MenuManager.
+
+Select GameScene's QuitButton. In Button (Script) → On Click(), press +, drag the GameScene MenuManager into the object field, and select MainMenuController → QuitGame().
